@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Signup</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4);
+}
+
+/* Signup Card */
+.card{
+width:380px;
+padding:40px 30px;
+border-radius:20px;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+text-align:center;
+}
+
+.card h2{
+color:#fff;
+margin-bottom:25px;
+font-size:30px;
+font-weight:600;
+}
+
+/* Inputs */
+input{
+width:100%;
+padding:14px;
+margin:12px 0;
+border:none;
+outline:none;
+border-radius:10px;
+background:rgba(255,255,255,0.15);
+color:#fff;
+font-size:15px;
+}
+
+input::placeholder{
+color:#ddd;
+}
+
+/* Button */
+button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:10px;
+background:#06b6d4;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0891b2;
+transform:translateY(-2px);
+}
+
+/* Text */
+p{
+color:white;
+margin-top:18px;
+font-size:14px;
+}
+
+a{
+color:#93c5fd;
+text-decoration:none;
+font-weight:600;
+}
+
+a:hover{
+text-decoration:underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Create Account</h2>
+
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="signup()">Signup</button>
+
+  <p>Already have account? <a href="login.html">Login</a></p>
+</div>
+
+<script>
+async function signup() {
+  await fetch("http://localhost:5000/signup", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      email:email.value,
+      password:password.value
+    })
+  });
+
+  alert("Signup successful!");
+  window.location="login.html";
+}
+</script>
+
+</body>
+</html>

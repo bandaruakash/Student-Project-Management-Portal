@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f172a,#1e293b,#3b82f6);
+}
+
+/* Login Card */
+.card{
+  width:380px;
+  padding:40px 30px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  text-align:center;
+}
+
+.card h2{
+  color:#fff;
+  margin-bottom:25px;
+  font-size:32px;
+  font-weight:600;
+}
+
+/* Inputs */
+input{
+  width:100%;
+  padding:14px;
+  margin:12px 0;
+  border:none;
+  outline:none;
+  border-radius:10px;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+  font-size:15px;
+}
+
+input::placeholder{
+  color:#ddd;
+}
+
+/* Button */
+button{
+  width:100%;
+  padding:14px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#1d4ed8;
+  transform:translateY(-2px);
+}
+
+/* Text */
+p{
+  color:#fff;
+  margin-top:18px;
+  font-size:14px;
+}
+
+a{
+  color:#60a5fa;
+  text-decoration:none;
+  font-weight:600;
+}
+
+a:hover{
+  text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Login</h2>
+
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+
+  <p>Don't have account? <a href="signup.html">Signup</a></p>
+</div>
+
+<script>
+async function login() {
+  const res = await fetch("http://localhost:5000/login", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      email:email.value,
+      password:password.value
+    })
+  });
+
+  const data = await res.json();
+
+  localStorage.setItem("token", data.token);
+
+  const payload = JSON.parse(atob(data.token.split('.')[1]));
+  localStorage.setItem("userId", payload.id);
+
+  window.location="dashboard.html";
+}
+</script>
+
+</body>
+</html>
